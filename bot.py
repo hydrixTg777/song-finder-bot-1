@@ -93,10 +93,9 @@ async def ask(client, message):
     server = f"https://api.wolframalpha.com/v1/spoken?appid={appid}&i={ques}"
     chat_id = str(message.chat.id)
     res = get(server)
-    if "Wolfram Alpha did not understand" in res.text:
-        await client.send_chat_action(message.chat.id, "Typing")
-        await client.send_message(chat_id, res.text, parse_mode="markdown")
-        return
+    await client.send_chat_action(message.chat.id, "Typing")
+    await client.send_message(chat_id, res.text, parse_mode="markdown")
+    return
     await client.send_message(chat_id, "**Sorry,i couldn't find answer for your question😔**", parse_mode="markdown")
 
 
