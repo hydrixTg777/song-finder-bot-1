@@ -42,7 +42,7 @@ START_BTN = InlineKeyboardMarkup(
         ],
         [
         InlineKeyboardButton('Channel', url='https://t.me/mizolibrary'),
-        InlineKeyboardButton('Source', url='https://github.com/RSR-TG-Info/Join-Sticker'),
+        InlineKeyboardButton('Source', url='https://github.com/RSR-TG-Info/Answer-Bot'),
         ],
         [InlineKeyboardButton('Owner', url="t.me/rsrmusic")
         ]]
