@@ -24,7 +24,6 @@
         "WOLFRAM_ID": {
             "description": "You can get from  https://products.wolframalpha.com/api/"
         }
-        
     },
     "buildpacks": [
         {
