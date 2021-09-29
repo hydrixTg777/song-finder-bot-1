@@ -2,6 +2,6 @@ requests
 pyrogram
 motor
 dnspython
-TgCrypto
+tgcrypto
 aiohttp
 python-decouple
