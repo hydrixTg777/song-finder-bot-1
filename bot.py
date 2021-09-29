@@ -88,19 +88,19 @@ async def start(bot, update):
     )
 
 @RSR.on_message(filters.text & filters.private)
-async def ask(bot, update, message):
+async def ask(client, message):
     ques = urllib.parse.quote_plus(str(io))
     appid = WOLFRAM_ID
     server = f"https://api.wolframalpha.com/v1/spoken?appid={appid}&i={ques}"
     chat_id = str(message.chat.id)
     res = get(server)
     if "Wolfram Alpha did not understand" in res.text:
-        await bot.send_chat_action(message.chat.id, "Typing")
-        await bot.send_message(chat_id,
+        await client.send_chat_action(message.chat.id, "Typing")
+        await client.send_message(chat_id,
             "**Sorry,i couldn't find answer for your question**😔"
         )
         return
-    await bot.send_message(chat_id, res.text, parse_mode="markdown")
+    await client.send_message(chat_id, res.text, parse_mode="markdown")
 
     
     
