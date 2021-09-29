@@ -31,7 +31,7 @@ ABOUT = """
 """
 
 HELP = """
-Ask me something(i accpeted text only)
+Ask me something(Text only)
 """
 
 START_BTN = InlineKeyboardMarkup(
@@ -40,7 +40,7 @@ START_BTN = InlineKeyboardMarkup(
         InlineKeyboardButton('Help',callback_data='rsrhelp')
         ],
         [
-        InlineKeyboardButton('Join Channel', url='https://t.me/mizolibrary'),
+        InlineKeyboardButton('Channel', url='https://t.me/mizolibrary'),
         InlineKeyboardButton('Source', url='https://github.com/RSR-TG-Info/Join-Sticker'),
         ],
         [InlineKeyboardButton('Owner', url="t.me/rsrmusic")
