@@ -98,12 +98,7 @@ async def start(bot, update):
 
 
 
-@RSR.on_message(
-    filters.text
-    & filters.reply
-    & ~filters.bot
-    & ~filters.edited,
-)
+@RSR.on_message(filters.text & filters.private)
 async def kukiai(client: Client, message: Message):
   msg = message.text
   chat_id = message.chat.id
