@@ -1,4 +1,6 @@
 requests
 pyrogram
 motor
-python
+dnspython
+TgCrypto
+aiohttp
