@@ -8,7 +8,17 @@ from requests import get
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from pyrogram.types import (
 
+  Message, 
+
+)
+
+from pyrogram import filters, Client 
+
+import requests
+
+import json
 
 
 WOLFRAM_ID = os.environ.get("WOLFRAM_ID", None)
@@ -86,16 +96,24 @@ async def start(bot, update):
         reply_markup=reply_markup
     )
 
-@RSR.on_message(filters.text & filters.private)
-async def ask(client, message):
-    ques = urllib.parse.quote_plus(str(io))
-    appid = WOLFRAM_ID
-    server = f"https://api.wolframalpha.com/v1/spoken?appid={appid}&i={ques}"
-    chat_id = str(message.chat.id)
-    res = get(server)
-    await client.send_chat_action(message.chat.id, "Typing")
-    await client.send_message(message.chat.id, res.text, parse_mode="markdown")
 
+
+@RSR.on_message(
+    filters.text
+    & filters.reply
+    & ~filters.bot
+    & ~filters.edited,
+)
+async def kukiai(client: Client, message: Message):
+  msg = message.text
+  chat_id = message.chat.id
+
+  Kuki =   requests.get(f"https://kuki-api.tk/api/botname/owner/message={msg}").json()
+
+  moezilla = f"{Kuki['reply']}"
+      
+  await client.send_chat_action(message.chat.id, "typing")
+  await message.reply_text(moezilla)
 
     
 RSR.run()
