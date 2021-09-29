@@ -141,3 +141,7 @@ async def broadcast(bot, update):
 	else:
 	    await update.reply_document(document='broadcast.txt', caption=f"broadcast completed in `{completed_in}`\n\nTotal users {total_users}.\nTotal done {done}, {success} success and {failed} failed.")
 	os.remove('broadcast.txt')
+	
+	
+	
+	RSR.run()
