@@ -68,7 +68,8 @@ async def cb_data(bot, update):
         await update.message.edit_text(
             text=ABOUT,
             reply_markup=BACK_BTN
-        )
+            disable_web_page_preview=True
+	)
     else:
         await update.message.edit_text(
             text=START.format(update.from_user.mention),
