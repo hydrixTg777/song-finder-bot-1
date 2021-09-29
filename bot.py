@@ -94,9 +94,9 @@ async def ask(client, message):
     chat_id = str(message.chat.id)
     res = get(server)
     await client.send_chat_action(message.chat.id, "Typing")
-    await client.send_message(chat_id, res.text, parse_mode="markdown")
-    return
-    await client.send_message(chat_id, "**Sorry,i couldn't find answer for your question😔**", parse_mode="markdown")
+    await client.send_message(message.chat.id, res.text, parse_mode="markdown")
+    if not res:
+    await client.send_message(message.chat.id, "**Sorry,i couldn't find answer for your question😔**")
 
 
     
