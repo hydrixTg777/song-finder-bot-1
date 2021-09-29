@@ -144,4 +144,6 @@ async def broadcast(bot, update):
 	
 	
 	
-	RSR.run()
+	
+RSR.run()
+	
