@@ -7,16 +7,19 @@ from requests import get
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+BOT_OWNER = int(os.environ["BOT_OWNER"])
+DATABASE_URL = os.environ["DATABASE_URL"]
+WOLFRAM_ID = os.environ.get("WOLFRAM_ID", None)
+
 
 RSR = Client(
     "Answer Bot",
     bot_token = os.environ["BOT_TOKEN"],
     api_id = int(os.environ["API_ID"]),
     api_hash = os.environ["API_HASH"],
-    WOLFRAM_ID = os.environ["WOLFRAM_ID"]
 )
 
-START = """ Hi {}, I'm Join Sticker Sender Bot.\n\n
+START = """ Hi {}, I'm Answer Bot.\n\n
 You can get answer for your question using me🙂
 """
 
