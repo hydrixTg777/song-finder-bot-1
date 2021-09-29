@@ -99,7 +99,7 @@ async def ask(client, message):
         await client.send_message(chat_id, res.text, parse_mode="markdown")
         return
 await client.send_message(chat_id, "**Sorry,i couldn't find answer for your question😔**", parse_mode="markdown")
-    await client.send_message(chat_id, res.text, parse_mode="markdown")
+
 
     
     
