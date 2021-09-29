@@ -31,9 +31,16 @@
             "description": "You can get from  https://www.mongodb.com/"
         }
     },
+    "stack" : "heroku-20",
     "buildpacks": [
         {
             "url": "heroku/python"
         }
-    ]
+    ],
+    "formation" : {
+        "worker" : {
+            "quantity" : 1,
+            "size" : "free"
+        }
+    }
 }
