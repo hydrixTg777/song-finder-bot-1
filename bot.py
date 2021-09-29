@@ -22,7 +22,7 @@ RSR = Client(
     api_hash = os.environ["API_HASH"],
 )
 
-START = """ Hi {}, I'm Answer Bot.\n\n
+START = """ Hi {}, I'm Answer Bot.\n
 You can get answer for your question using me🙂
 """
 
