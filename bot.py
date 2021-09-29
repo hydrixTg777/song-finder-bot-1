@@ -67,8 +67,8 @@ async def cb_data(bot, update):
     elif update.data == "rsrabout":
         await update.message.edit_text(
             text=ABOUT,
+            disable_web_page_preview=True,
             reply_markup=BACK_BTN
-            disable_web_page_preview=True
 	)
     else:
         await update.message.edit_text(
