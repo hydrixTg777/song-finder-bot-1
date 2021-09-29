@@ -90,14 +90,15 @@ async def ask(bot, update):
     ques = urllib.parse.quote_plus(io)
     appid = WOLFRAM_ID
     server = f"https://api.wolframalpha.com/v1/spoken?appid={appid}&i={ques}"
+    chat_id = str(message.chat.id)
     res = get(server)
     if "Wolfram Alpha did not understand" in res.text:
         await bot.send_chat_action(message.chat.id, "Typing")
-        await bot.send_message(
+        await bot.send_message(chat_id,
             "**Sorry,i couldn't find answer for your question**😔"
         )
         return
-    await bot.send_message(res.text, parse_mode="markdown")
+    await bot.send_message(chat_id, res.text, parse_mode="markdown")
 
     
     
