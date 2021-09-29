@@ -88,7 +88,7 @@ async def start(bot, update):
     )
 
 @RSR.on_message(filters.text & filters.private)
-async def ask(bot, update):
+async def ask(bot, update, message):
     ques = urllib.parse.quote_plus(str(io))
     appid = WOLFRAM_ID
     server = f"https://api.wolframalpha.com/v1/spoken?appid={appid}&i={ques}"
