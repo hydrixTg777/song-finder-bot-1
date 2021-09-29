@@ -2,7 +2,10 @@ import os
 import urllib
 import requests
 import subprocess
+import pyrogram
+import logging
 from requests import get
+
 
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
