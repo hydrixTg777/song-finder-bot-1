@@ -10,8 +10,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from database import Database
 
 
-BOT_OWNER = int(os.environ["BOT_OWNER"])
-DATABASE_URL = os.environ["DATABASE_URL"]
+
 WOLFRAM_ID = os.environ.get("WOLFRAM_ID", None)
 
 
