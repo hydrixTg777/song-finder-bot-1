@@ -24,6 +24,12 @@
         "WOLFRAM_ID": {
             "description": "You can get from  https://products.wolframalpha.com/api/"
         },
+        "BOT_OWNER": {
+            "description": "Owner ID"
+        },
+        "DATABASE_URL": {
+            "description": "You can get from  https://www.mongodb.com/"
+        }
     },
     "buildpacks": [
         {
