@@ -6,6 +6,7 @@ from requests import get
 
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from database import Database
 
 BOT_OWNER = int(os.environ["BOT_OWNER"])
 DATABASE_URL = os.environ["DATABASE_URL"]
