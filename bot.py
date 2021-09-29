@@ -96,10 +96,9 @@ async def ask(client, message):
     res = get(server)
     if "Wolfram Alpha did not understand" in res.text:
         await client.send_chat_action(message.chat.id, "Typing")
-        await client.send_message(chat_id,
-            "**Sorry,i couldn't find answer for your question**😔"
-        )
+        await client.send_message(chat_id, res.text, parse_mode="markdown")
         return
+await client.send_message(chat_id, "**Sorry,i couldn't find answer for your question😔**", parse_mode="markdown")
     await client.send_message(chat_id, res.text, parse_mode="markdown")
 
     
