@@ -83,24 +83,6 @@ async def start(bot, update):
     )
 
 
-
-async def shazam(file):
-    shazam = Shazam()
-    try:
-        r = await shazam.recognize_song(file)
-    except:
-        return None, None, None
-    if not r:
-        return None, None, None
-    track = r.get("track")
-    if not track:
-        await rsr1.edit("**Song Not Found☹️**")
-    nt = track.get("images")
-    image = nt.get("coverarthq")
-    by = track.get("subtitle")
-    title = track.get("title")
-    return image, by, title
-
 async def convert_to_audio(vid_path):
     stark_cmd = f"ffmpeg -i {vid_path} -map 0:a friday.mp3"
     await runcmd(stark_cmd)
@@ -123,14 +105,30 @@ async def shazam_(client, message):
         dur = message.reply_to_message.video.duration
         if not music_file:
             return await rsr1.edit("`Unable to convert to Song File. Is this a valid File?`")
+
+async def shazam(file):
+    shazam = Shazam()
+    try:
+        r = await shazam.recognize_song(file)
+    except:
+        return None, None, None
+    if not r:
+        return None, None, None
+    track = r.get("track")
+    if not track:
+        await rsr1.edit("**Song not found☹️**")
+    nt = track.get("images")
+    image = nt.get("coverarthq")
+    by = track.get("subtitle")
+    title = track.get("title")
+    return image, by, title
+
     elif (message.reply_to_message.voice or message.reply_to_message.audio):
         dur = message.reply_to_message.voice.duration if message.reply_to_message.voice else message.reply_to_message.audio.duration
         music_file = await message.reply_to_message.download()
     size_ = humanbytes(os.stat(music_file).st_size)
     dur = datetime.timedelta(seconds=dur)
     thumb, by, title = await shazam(music_file)
-    if title is None:
-        return await rsr1.edit("`No results found`")
     etime = time.time()
     t_k = round(etime - stime)
     caption = f"""<b><u>Identified Finish ✅</b></u>
