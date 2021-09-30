@@ -82,67 +82,45 @@ async def start(bot, update):
         reply_markup=reply_markup
     )
 
-async def shazam(file):
-    shazam = Shazam()
-    try:
-        r = await shazam.recognize_song(file)
-    except:
-        return None, None, None
-    if not r:
-        return None, None, None
-    track = r.get("track")
-    if not track:
-        RSR.reply_text("**Song not found☹️**", quote=True)
-    nt = track.get("images")
-    image = nt.get("coverarthq")
-    by = track.get("subtitle")
-    title = track.get("title")
-    return image, by, title
-
-
-async def convert_to_audio(vid_path):
-    stark_cmd = f"ffmpeg -i {vid_path} -map 0:a friday.mp3"
-    await runcmd(stark_cmd)
-    final_warner = "friday.mp3"
-    if not os.path.exists(final_warner):
-        return None
-    return final_warner
-
 @RSR.on_message(filters.command(["audify"]))
-async def shazam_(client, message):
-    stime = time.time()
-    rsr1 = await message.reply_text("🔍")
+async def shazamm(client, message):
+    rsr1 = await message.reply_text("⏳")
     if not message.reply_to_message:
-        return await rsr1.edit("`Reply Audio or Video`")
-    if not (message.reply_to_message.audio or message.reply_to_message.voice or message.reply_to_message.video):
-        return await rsr1.edit("`Reply to Audio File`")
-    if message.reply_to_message.video:
-        video_file = await message.reply_to_message.download()
-        music_file = await convert_to_audio(video_file)
-        dur = message.reply_to_message.video.duration
-        if not music_file:
-            return await rsr1.edit("`Unable to convert to Song File. Is this a valid File?`")
-    elif (message.reply_to_message.voice or message.reply_to_message.audio):
-        dur = message.reply_to_message.voice.duration if message.reply_to_message.voice else message.reply_to_message.audio.duration
-        music_file = await message.reply_to_message.download()
-    size_ = humanbytes(os.stat(music_file).st_size)
-    dur = datetime.timedelta(seconds=dur)
-    thumb, by, title = await shazam(music_file)
-    etime = time.time()
-    t_k = round(etime - stime)
-    caption = f"""<b><u>Identified Finish ✅</b></u>
-    
-<b>📂Song Name :</b> <code>{title}</code>\n
-<b>🎙️Artist :</b> <code>{by}</code>\n
-<b>⏳Duration :</b> <code>{dur}</code>\n
-<b>🗂️Size :</b> <code>{size_}</code>\n
-<b>⏰Time Taken :</b> <code>{t_k} Seconds</code>
-    """
-    if thumb:
-        await rsr1.delete()
-        await message.reply_to_message.reply_photo(thumb, caption=caption, quote=True)
-    else:
-        await rsr1.edit(caption)
+        await rsr1.edit("Reply Audio or Video.")
+        return
+    if os.path.exists("friday.mp3"):
+        os.remove("friday.mp3")
+    kkk = await fetch_audio(client, message)
+    downloaded_file_name = kkk
+    f = {"file": (downloaded_file_name, open(downloaded_file_name, "rb"))}
+    await rsr1.edit("🔍")
+    r = requests.post("https://starkapi.herokuapp.com/shazam/", files=f)
+    try:
+        xo = r.json()
+    except JSONDecodeError:
+        await rsr1.edit("`Song not found😔`")
+        return
+    if xo.get("success") is False:
+        await rsr1.edit("`Song not found😔`")
+        os.remove(downloaded_file_name)
+        return
+    xoo = xo.get("response")
+    zz = xoo[1]
+    zzz = zz.get("track")
+    if not zzz:
+        await rsr1.edit("`Song not found😔`")
+        return
+    nt = zzz.get("images")
+    image = nt.get("coverarthq")
+    by = zzz.get("subtitle")
+    title = zzz.get("title")
+    messageo = f"""<b><u>Identify Finished ✅</b></u>\n
+<b>📁 Song Name : </b> {title}\n
+<b>🎙️ Artist : </b>{by}
+"""
+    await client.send_photo(message.chat.id, image, messageo, reply_to_message_id=message.reply_to_message.message_id, parse_mode="HTML")
+    os.remove(downloaded_file_name)
+    await kek.delete()
 
     
 RSR.run()
