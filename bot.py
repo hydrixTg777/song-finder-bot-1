@@ -92,7 +92,7 @@ async def shazam(file):
         return None, None, None
     track = r.get("track")
     if not track:
-        RSR.send_message("**Song not found☹️**")
+        RSR.reply_text("**Song not found☹️**")
     nt = track.get("images")
     image = nt.get("coverarthq")
     by = track.get("subtitle")
