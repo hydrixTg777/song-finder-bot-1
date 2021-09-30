@@ -2,8 +2,8 @@ import asyncio
 import shlex
 import time
 from typing import Tuple
-
-
+from pyrogram.types import Message
+from pyrogram import Client
 
 
 async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
@@ -25,14 +25,14 @@ async def fetch_audio(client, message):
     """Fetch Audio From Videos Or Audio Itself"""
     c_time = time.time()
     if not message.reply_to_message:
-        rsr2 = await message.reply_text("**Reply Audio or Video🙄**")
+        message.edit("**Reply Audio or Video🙄**")
         return
     warner_stark = message.reply_to_message
     if warner_stark.audio is None and warner_stark.video is None:
-        await rsr2.edit("**Format not Supported🤕**")
+        await message.edit("**Format not Supported🤕**")
         return
     if warner_stark.video:
-        await rsr2.edit("**Video Detected, Converting to Audio😊**")
+        await message.edit("**Video Detected, Converting to Audio😊**")
         warner_bros = await message.reply_to_message.download(
             progress=progress, progress_args=(message, c_time, f"**Downloading Audio😁**")
         )
@@ -40,9 +40,9 @@ async def fetch_audio(client, message):
         await runcmd(stark_cmd)
         final_warner = "friday.mp3"
     elif warner_stark.audio:
-        await rsr2.edit("**Download Started🙃**")
+        await message.edit("**Download Started🙃**")
         final_warner = await message.reply_to_message.download(
             progress=progress, progress_args=(message, c_time, f"**Downloading Video😁**`")
         )
-    await rsr2.edit("**Almost Done🤭**")
+    await message.edit("**Almost Done🤭**")
     return final_warner
