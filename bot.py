@@ -84,7 +84,7 @@ async def start(bot, update):
 
 @RSR.on_message(filters.command(["audify"]))
 async def shazamm(client, message):
-    rsr1 = await edit_or_reply("⏳")
+    rsr1 = await edit_or_reply(message, "⏳")
     if not message.reply_to_message:
         await rsr1.edit("Reply Audio or Video.")
         return
