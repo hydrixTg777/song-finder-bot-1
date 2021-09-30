@@ -123,7 +123,7 @@ async def shazam(file):
     title = track.get("title")
     return image, by, title
 
-    elif (message.reply_to_message.voice or message.reply_to_message.audio):
+    if (message.reply_to_message.voice or message.reply_to_message.audio):
         dur = message.reply_to_message.voice.duration if message.reply_to_message.voice else message.reply_to_message.audio.duration
         music_file = await message.reply_to_message.download()
     size_ = humanbytes(os.stat(music_file).st_size)
