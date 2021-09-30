@@ -7,7 +7,7 @@ import datetime
 import requests
 import time
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from cmd import runcmd, fetch_audio
+from cmd import edit_or_reply, runcmd, fetch_audio
 
 
 RSR = Client(
@@ -84,7 +84,7 @@ async def start(bot, update):
 
 @RSR.on_message(filters.command(["audify"]))
 async def shazamm(client, message):
-    rsr1 = await message.reply_text("⏳")
+    rsr1 = await edit_or_reply("⏳")
     if not message.reply_to_message:
         await rsr1.edit("Reply Audio or Video.")
         return
@@ -120,7 +120,7 @@ async def shazamm(client, message):
 """
     await client.send_photo(message.chat.id, image, messageo, reply_to_message_id=message.reply_to_message.message_id, parse_mode="HTML")
     os.remove(downloaded_file_name)
-    await kek.delete()
+    await rsr1.delete()
 
     
 RSR.run()
