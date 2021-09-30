@@ -29,7 +29,7 @@ async def fetch_audio(client, message):
         return
     warner_stark = message.reply_to_message
     if warner_stark.audio is None and warner_stark.video is None:
-        await message.edit("**Format not Supported🤕**")
+        await rsr1.edit("**Format not Supported🤕**")
         return
     if warner_stark.video:
         await rsr1.edit("**Video Detected, Converting to Audio😊**")
