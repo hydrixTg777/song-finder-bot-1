@@ -6,7 +6,7 @@ from pyrogram import filters, Client
 import datetime
 import requests
 import time
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from cmd import runcmd, fetch_audio
 
 
@@ -83,7 +83,6 @@ async def start(bot, update):
     )
 
 async def shazam(file):
-    chat_id = message.chat.id
     shazam = Shazam()
     try:
         r = await shazam.recognize_song(file)
@@ -93,7 +92,7 @@ async def shazam(file):
         return None, None, None
     track = r.get("track")
     if not track:
-        await RSR.send_message(chat_id, text="**Song not found☹️**")
+        RSR.send_message("**Song not found☹️**")
     nt = track.get("images")
     image = nt.get("coverarthq")
     by = track.get("subtitle")
