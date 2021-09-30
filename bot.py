@@ -106,13 +106,7 @@ async def convert_to_audio(vid_path):
         return None
     return final_warner
 
-@friday_on_cmd(
-    ["shazam"],
-    cmd_help={
-        "help": "Recognize / Discover A Song",
-        "example": "{ch}shazam (reply to music file)",
-    },
-)
+@RSR.on_message(filters.audio & filters.video & filters.private)
 async def shazam_(client, message):
     stime = time.time()
     rsr1 = await message.reply("🔍")
