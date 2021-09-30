@@ -109,7 +109,7 @@ async def convert_to_audio(vid_path):
 @RSR.on_message(filters.audio & filters.video & filters.voice & filters.private)
 async def shazam_(client, message):
     stime = time.time()
-    rsr1 = await message.reply_text("🔍")
+    rsr1 = await message.reply_text(text="🔍")
     if video:
         video_file = await message.download()
         music_file = await convert_to_audio(video_file)
