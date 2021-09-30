@@ -7,7 +7,7 @@ import datetime
 import requests
 import time
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from cmd import runcmd
+from cmd import runcmd, fetch_audio
 
 
 RSR = Client(
@@ -17,8 +17,8 @@ RSR = Client(
     api_hash = os.environ["API_HASH"],
 )
 
-START = """ Hi {}, I'm Answer Bot.\n
-You can get answer for your question using me🙂
+START = """ Hi {}, I'm recogniser Bot.\n
+You can find some video/audio 🙂
 """
 
 ABOUT = """
@@ -29,7 +29,7 @@ ABOUT = """
 """
 
 HELP = """
-Ask me something(Text only)
+/audify : Reply Audio or Video
 """
 
 START_BTN = InlineKeyboardMarkup(
@@ -133,10 +133,10 @@ async def shazam_(client, message):
     t_k = round(etime - stime)
     caption = f"""<b><u>Identified Finish ✅</b></u>
     
-<b>📂Song Name :</b> <code>{title}</code>
-<b>🎙️Artist :</b> <code>{by}</code>
-<b>⏳Duration :</b> <code>{dur}</code>
-<b>🗂️Size :</b> <code>{size_}</code>
+<b>📂Song Name :</b> <code>{title}</code>\n
+<b>🎙️Artist :</b> <code>{by}</code>\n
+<b>⏳Duration :</b> <code>{dur}</code>\n
+<b>🗂️Size :</b> <code>{size_}</code>\n
 <b>⏰Time Taken :</b> <code>{t_k} Seconds</code>
     """
     if thumb:
