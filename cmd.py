@@ -39,7 +39,7 @@ async def fetch_audio(client, message):
     elif warner_stark.audio:
         rsr2 = await edit_or_reply(message, "**Downloading🤭**")
         final_warner = await message.reply_to_message.download()
-    await rsr2.edit("`Finished😊`")
+    await rsr2.edit("**Finished😊**")
     await rsr2.delete()
     return final_warner
 
