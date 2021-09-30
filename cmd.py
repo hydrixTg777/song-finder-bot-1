@@ -22,29 +22,24 @@ async def runcmd(cmd: str) -> Tuple[str, str, int, int]:
 
 
 async def fetch_audio(client, message):
-    """Fetch Audio From Videos Or Audio Itself"""
-    c_time = time.time()
+    time.time()
     if not message.reply_to_message:
-        message.reply("**Reply Audio or Video🙄**")
+        await message.reply("**Reply Video or Audio**")
         return
     warner_stark = message.reply_to_message
     if warner_stark.audio is None and warner_stark.video is None:
-        await message.reply("**Format not Supported🤕**")
+        await message.reply("**Format not Supported**")
         return
     if warner_stark.video:
-        rsr2 = await message.reply("**Converting to Audio😊**")
-        warner_bros = await message.reply_to_message.download(
-            progress=progress, progress_args=(message, c_time, f"**Downloading Audio😁**")
-        )
+        rsr2 = await message.reply("**Converting😁**")
+        warner_bros = await message.reply_to_message.download()
         stark_cmd = f"ffmpeg -i {warner_bros} -map 0:a friday.mp3"
         await runcmd(stark_cmd)
         final_warner = "friday.mp3"
     elif warner_stark.audio:
-        rsr2 = await edit_or_reply(message, "**Download Started🙃**")
-        final_warner = await message.reply_to_message.download(
-            progress=progress, progress_args=(message, c_time, f"**Downloading Video😁**`")
-        )
-    await rsr2.edit("**Almost Done🤭**")
+        rsr2 = await edit_or_reply(message, "**Downloading🤭**")
+        final_warner = await message.reply_to_message.download()
+    await rsr2.edit("`Finished😊`")
     await rsr2.delete()
     return final_warner
 
