@@ -2,3 +2,5 @@ requests
 pyrogram
 tgcrypto
 motor
+shazamio
+asyncio
