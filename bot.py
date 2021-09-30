@@ -17,8 +17,8 @@ RSR = Client(
     api_hash = os.environ["API_HASH"],
 )
 
-START = """ Hi {}, I'm Song recogniser Bot.\n\n
-**Tutorial**:
+START = """ Hi {}, I'm Song recogniser Bot.\n
+**Tutorial**:\n
 **Step 1** : Send me Video or Audio\n
 **Step 2** : Reply your Video or Audio with this /audify command
 """
