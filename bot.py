@@ -106,24 +106,28 @@ async def convert_to_audio(vid_path):
         return None
     return final_warner
 
-@RSR.on_message(filters.audio & filters.video & filters.voice & filters.private)
+@RSR.on_message(filters.command(["audify"]))
 async def shazam_(client, message):
     stime = time.time()
-    rsr1 = await client.send_message(message.chat.id, "🔍")
-    if video:
-        video_file = await message.download()
+    rsr1 = await message.reply_text("🔍")
+    if not message.reply_to_message:
+        return await rsr1.edit("`Reply Audio or Video`")
+    if not (message.reply_to_message.audio or message.reply_to_message.voice or message.reply_to_message.video):
+        return await rsr1.edit("`Reply to Audio File`")
+    if message.reply_to_message.video:
+        video_file = await message.reply_to_message.download()
         music_file = await convert_to_audio(video_file)
-        dur = message.video.duration
+        dur = message.reply_to_message.video.duration
         if not music_file:
-            return await client.send_message(message.chat.id, "`Unable to convert to Song File. Is this a valid File?`")
-    elif (message.voice or message.audio):
-        dur = message.voice.duration if message.voice else message.audio.duration
-        music_file = await message.download()
+            return await rsr1.edit("`Unable to convert to Song File. Is this a valid File?`")
+    elif (message.reply_to_message.voice or message.reply_to_message.audio):
+        dur = message.reply_to_message.voice.duration if message.reply_to_message.voice else message.reply_to_message.audio.duration
+        music_file = await message.reply_to_message.download()
     size_ = humanbytes(os.stat(music_file).st_size)
     dur = datetime.timedelta(seconds=dur)
     thumb, by, title = await shazam(music_file)
     if title is None:
-        return await client.send_message(message.chat.id, "`No results found`")
+        return await rsr1.edit("`No results found`")
     etime = time.time()
     t_k = round(etime - stime)
     caption = f"""<b><u>Identified Finish ✅</b></u>
@@ -138,7 +142,7 @@ async def shazam_(client, message):
         await rsr1.delete()
         await message.reply_to_message.reply_photo(thumb, caption=caption, quote=True)
     else:
-        await client.send_mesaage(message.chat.id, caption)
+        await rsr1.edit(caption)
 
     
 RSR.run()
