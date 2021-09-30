@@ -6,7 +6,7 @@ from pyrogram import filters
 import datetime
 import requests
 import time
-
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
 RSR = Client(
