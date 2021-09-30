@@ -2,7 +2,7 @@ import asyncio
 import shlex
 import time
 from typing import Tuple
-from bot import rsr1
+
 
 
 
