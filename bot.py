@@ -6,7 +6,7 @@ from pyrogram import filters, Client
 import datetime
 import requests
 import time
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, Message
 from cmd import runcmd, fetch_audio
 
 
