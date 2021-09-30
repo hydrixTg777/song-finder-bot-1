@@ -25,7 +25,7 @@ ABOUT = """
 ● **OWNER :** [RSR](https://t.me/rsrmusic) 
 ● **SERVER :** `Heroku` 
 ● **LIBRARY :** `Pyrogram` 
-● **LANGUAGE :** `Python 3.9` 
+● **LANGUAGE :** `Python 3.8.6` 
 """
 
 HELP = """
