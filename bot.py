@@ -101,17 +101,17 @@ async def shazamm(client, message):
     try:
         xo = r.json()
     except JSONDecodeError:
-        await rsr1.edit("`Song not found😔`")
+        await rsr1.edit("**Song not found😔**")
         return
     if xo.get("success") is False:
-        await rsr1.edit("`Song not found😔`")
+        await rsr1.edit("**Song not found😔**")
         os.remove(downloaded_file_name)
         return
     xoo = xo.get("response")
     zz = xoo[1]
     zzz = zz.get("track")
     if not zzz:
-        await rsr1.edit("`Song not found😔`")
+        await rsr1.edit("**Song not found😔**")
         return
     nt = zzz.get("images")
     image = nt.get("coverarthq")
