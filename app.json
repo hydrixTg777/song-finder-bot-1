@@ -7,9 +7,9 @@
        
         "telegram bot",
         "pyrogram bot",
-        "Answer bot",
-        "question bot",
-        "ask bot"
+        "Song Finder",
+        "song finder bor",
+        "shazam bot"
     ],
     "env": {
         "BOT_TOKEN": {
