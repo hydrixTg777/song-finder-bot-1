@@ -1,8 +1,8 @@
 {
-    "name": "Answer Bot",
-    "description": "You can get answer for your question
+    "name": "Song Finder",
+    "description": "You can find song using me",
   ",
-    "repository": "https://github.com/RSR-TG-Info/Answer-Bot",
+    "repository": "https://github.com/RSR-TG-Info/song-finder-bot",
     "keywords": [
        
         "telegram bot",
