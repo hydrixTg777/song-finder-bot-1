@@ -20,9 +20,6 @@
         },
         "API_HASH": {
             "description": "Your API_HASH from https://my.telegram.org/apps"
-        },
-        "WOLFRAM_ID": {
-            "description": "You can get from  https://products.wolframalpha.com/api/"
         }
     },
     "buildpacks": [
