@@ -88,7 +88,7 @@ async def start(bot, update):
 
 
 
-async def shazam(client, message, file):
+async def shazam(file):
     shazam = Shazam()
     try:
         r = await shazam.recognize_song(file)
@@ -98,8 +98,6 @@ async def shazam(client, message, file):
         return None, None, None
     track = r.get("track")
     nt = track.get("images")
-    if not nt:
-        return await client.send_message(message.chat.id, text="**Not found :(**", reply_to_message_id=message.message_id)
     image = nt.get("coverarthq")
     by = track.get("subtitle")
     title = track.get("title")
@@ -117,25 +115,25 @@ async def convert_to_audio(vid_path):
 @RSR.on_message(filters.command(["audify"]))
 async def shazam_(client, message):
     stime = time.time()
-    await client.send_message(message.chat.id, text="`Processing...`", reply_to_message_id=message.message_id)
+    hehe = await client.send_message(message.chat.id, text="`Processing...`", reply_to_message_id=message.message_id)
     if not message.reply_to_message:
-        return await client.send_message(message.chat.id, text="**Reply Audio or Video.**", reply_to_message_id=message.message_id)
+        return await hehe.edit("**Reply Audio or Video.**")
     if not (message.reply_to_message.audio or message.reply_to_message.voice or message.reply_to_message.video):
-        return await client.send_message(message.chat.id, text="**Reply Audio or Video.**", reply_to_message_id=message.message_id)
+        return await hehe.edit("**Reply Audio or Video.**")
     if message.reply_to_message.video:
         video_file = await message.reply_to_message.download()
         music_file = await convert_to_audio(video_file)
         dur = message.reply_to_message.video.duration
         if not music_file:
-            return await client.send_message(message.chat.id, text="**Unable to convert to song file. Is this a valid file?**", reply_to_message_id=message.message_id)
+            return await hehe.edit("**Unable to convert to song file. Is this a valid file?**")
     elif (message.reply_to_message.voice or message.reply_to_message.audio):
         dur = message.reply_to_message.voice.duration if message.reply_to_message.voice else message.reply_to_message.audio.duration
         music_file = await message.reply_to_message.download()
     size_ = humanbytes(os.stat(music_file).st_size)
     dur = datetime.timedelta(seconds=dur)
     thumb, by, title = await shazam(music_file)
-    if title is None:
-        return await client.send_message(message.chat.id, text="**Not found :(**", reply_to_message_id=message.message_id)
+    if not title and thumb:
+        return await hehe.edit("**Not found :(**")
     etime = time.time()
     t_k = round(etime - stime)
     caption = f"""<b><u>Finded Song ✅</b></u>
@@ -145,10 +143,10 @@ async def shazam_(client, message):
 <b>By :</b> <code>{by}</code>
     """
     if thumb:
-        await msg.delete()
+        await hehe.delete()
         await message.reply_to_message.reply_photo(thumb, caption=caption, quote=True)
     else:
-        await msg.edit(caption)
+        await hehe.edit(caption)
 
     
 RSR.run()
