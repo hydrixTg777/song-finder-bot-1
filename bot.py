@@ -115,17 +115,17 @@ async def convert_to_audio(vid_path):
 @RSR.on_message(filters.command(["audify"]))
 async def shazam_(client, message):
     stime = time.time()
-    msg = await edit_or_reply(message, "`Processing...`")
+    await client.send_message(message.chat.id, text="`Processing...`", reply_to_message_id=message.message_id)
     if not message.reply_to_message:
-        return await msg.edit("**Reply Audio or Video.**")
+        return await client.send_message(message.chat.id, text="**Reply Audio or Video.**", reply_to_message_id=message.message_id)
     if not (message.reply_to_message.audio or message.reply_to_message.voice or message.reply_to_message.video):
-        return await msg.edit("**Reply Audio or Video.**")
+        return await client.send_message(message.chat.id, text="**Reply Audio or Video.**", reply_to_message_id=message.message_id)
     if message.reply_to_message.video:
         video_file = await message.reply_to_message.download()
         music_file = await convert_to_audio(video_file)
         dur = message.reply_to_message.video.duration
         if not music_file:
-            return await msg.edit("**Unable to convert to song file. Is this a valid file?**")
+            return await client.send_message(message.chat.id, text="**Unable to convert to song file. Is this a valid file?**", reply_to_message_id=message.message_id)
     elif (message.reply_to_message.voice or message.reply_to_message.audio):
         dur = message.reply_to_message.voice.duration if message.reply_to_message.voice else message.reply_to_message.audio.duration
         music_file = await message.reply_to_message.download()
@@ -133,12 +133,13 @@ async def shazam_(client, message):
     dur = datetime.timedelta(seconds=dur)
     thumb, by, title = await shazam(music_file)
     if title is None:
-        return await msg.edit("**Not found :(**")
+        return await client.send_message(message.chat.id, text="**Not found :(**", reply_to_message_id=message.message_id)
     etime = time.time()
     t_k = round(etime - stime)
     caption = f"""<b><u>Finded Song</b></u>
     
 <b>Song Name :</b> <code>{title}</code>
+
 <b>By :</b> <code>{by}</code>
     """
     if thumb:
