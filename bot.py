@@ -88,7 +88,7 @@ async def start(bot, update):
 
 
 
-async def shazam(file):
+async def shazam(client, file):
     shazam = Shazam()
     try:
         r = await shazam.recognize_song(file)
@@ -98,6 +98,8 @@ async def shazam(file):
         return None, None, None
     track = r.get("track")
     nt = track.get("images")
+    if not nt:
+        return await client.send_message(message.chat.id
     image = nt.get("coverarthq")
     by = track.get("subtitle")
     title = track.get("title")
