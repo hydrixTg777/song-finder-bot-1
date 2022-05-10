@@ -112,7 +112,7 @@ async def convert_to_audio(vid_path):
     return final_warner
 
 
-@RSR.on_message(filters.private & filters.incoming & (filters.video | filters.document) & (filters.audio | filters.document))
+@RSR.on_message(filters.private & filters.incoming & filters.video & filters.audio)
 async def shazam_(client, message):
     stime = time.time()
     hehe = await client.send_message(message.chat.id, text="`Processing...`", reply_to_message_id=message.message_id)
