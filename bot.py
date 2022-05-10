@@ -86,20 +86,20 @@ async def start(bot, update):
 
 
 
-async def shazam(file):
-    shazam = Shazam()
-    try:
-        r = await shazam.recognize_song(file)
-    except:
-        return None, None, None
-    if not r:
-        return None, None, None
-    track = r.get("track")
-    nt = track.get("images")
-    image = nt.get("coverarthq")
-    by = track.get("subtitle")
-    title = track.get("title")
-    return image, by, title
+#async def shazam(file):
+    #shazam = Shazam()
+   # try:
+       # r = await shazam.recognize_song(file)
+    #except:
+       # return None, None, None
+  #  if not r:
+      #  return None, None, None
+  #  track = r.get("track")
+ #   nt = track.get("images")
+ #   image = nt.get("coverarthq")
+ #   by = track.get("subtitle")
+  #  title = track.get("title")
+  #  return image, by, title
 
 async def convert_to_audio(vid_path):
     stark_cmd = f"ffmpeg -i {vid_path} -map 0:a rsr.mp3"
@@ -125,6 +125,22 @@ async def shazam_(client, message):
         music_file = await message.download()
     size_ = humanbytes(os.stat(music_file).st_size)
     dur = datetime.timedelta(seconds=dur)
+    shazam = Shazam()
+    try:
+        r = await shazam.recognize_song(message)
+    except:
+        return None, None, None
+    if not r:
+        return None, None, None
+    track = r.get("track")
+    if not track:
+        await client.send_message(message.chat.id, text="**Not Found :(**", reply_to_message_id=message.message_id) 
+        return
+    nt = track.get("images")
+    image = nt.get("coverarthq")
+    by = track.get("subtitle")
+    title = track.get("title")
+    return image, by, title
     thumb, by, title = await shazam(music_file)
     if not title and thumb:
         return await hehe.edit("**Not found :(**")
