@@ -7,7 +7,7 @@ import datetime
 import requests
 import time
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from cmd import edit_or_reply, runcmd, fetch_audio
+from cmd import runcmd
 
 
 RSR = Client(
