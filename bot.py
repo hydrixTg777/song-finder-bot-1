@@ -95,8 +95,6 @@ async def shazam(file):
     if not r:
         return None, None, None
     track = r.get("track")
-    if not track:
-        return
     nt = track.get("images")
     image = nt.get("coverarthq")
     by = track.get("subtitle")
