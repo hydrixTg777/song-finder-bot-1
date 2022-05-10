@@ -104,15 +104,15 @@ async def shazam(file):
     return image, by, title
 
 async def convert_to_audio(vid_path):
-    stark_cmd = f"ffmpeg -i {vid_path} -map 0:a friday.mp3"
+    stark_cmd = f"ffmpeg -i {vid_path} -map 0:a rsr.mp3"
     await runcmd(stark_cmd)
-    final_warner = "friday.mp3"
+    final_warner = "rsr.mp3"
     if not os.path.exists(final_warner):
         return None
     return final_warner
 
 
-@RSR.on_message(filters.private & filters.incoming & filters.video & filters.audio)
+@RSR.on_message(filters.private & filters.incoming & (filters.video | filters.audio))
 async def shazam_(client, message):
     stime = time.time()
     hehe = await client.send_message(message.chat.id, text="`Processing...`", reply_to_message_id=message.message_id)
