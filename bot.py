@@ -86,20 +86,22 @@ async def start(bot, update):
 
 
 
-#async def shazam(file):
-    #shazam = Shazam()
-   # try:
-       # r = await shazam.recognize_song(file)
-    #except:
-       # return None, None, None
-  #  if not r:
-      #  return None, None, None
-  #  track = r.get("track")
- #   nt = track.get("images")
- #   image = nt.get("coverarthq")
- #   by = track.get("subtitle")
-  #  title = track.get("title")
-  #  return image, by, title
+async def shazam(file):
+    shazam = Shazam()
+    try:
+        r = await shazam.recognize_song(file)
+    except:
+        return None, None, None
+    if not r:
+        return None, None, None
+    track = r.get("track")
+    if not track:
+        return
+    nt = track.get("images")
+    image = nt.get("coverarthq")
+    by = track.get("subtitle")
+    title = track.get("title")
+    return image, by, title
 
 async def convert_to_audio(vid_path):
     stark_cmd = f"ffmpeg -i {vid_path} -map 0:a rsr.mp3"
@@ -125,25 +127,9 @@ async def shazam_(client, message):
         music_file = await message.download()
     size_ = humanbytes(os.stat(music_file).st_size)
     dur = datetime.timedelta(seconds=dur)
-    shazam = Shazam()
-    try:
-        r = await shazam.recognize_song(music_file)
-    except:
-        return None, None, None
-    if not r:
-        return None, None, None
-    track = r.get("track")
-    if not track:
-        await client.send_message(message.chat.id, text="**Not Found :(**", reply_to_message_id=message.message_id) 
-        return
-    nt = track.get("images")
-    image = nt.get("coverarthq")
-    by = track.get("subtitle")
-    title = track.get("title")
-    return image, by, title
-    #thumb, by, title = await shazam(music_file)
-    #if not title and thumb:
-        #return await hehe.edit("**Not found :(**")
+    thumb, by, title = await shazam(music_file)
+    if not title and thumb:
+        return await hehe.edit("**Not found :(**")
     etime = time.time()
     t_k = round(etime - stime)
     caption = f"""<b><u>Finded Song ✅</b></u>
@@ -152,7 +138,7 @@ async def shazam_(client, message):
 
 <b>By :</b> <code>{by}</code>
     """
-    if nt:
+    if thumb:
         await hehe.delete()
         await client.send_photo(message.chat.id, photo=thumb, caption=caption, reply_to_message_id=message.message_id)
     else:
