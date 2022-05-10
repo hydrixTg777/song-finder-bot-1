@@ -112,23 +112,19 @@ async def convert_to_audio(vid_path):
     return final_warner
 
 
-@RSR.on_message(filters.command(["audify"]))
+@RSR.on_message(filters.private & filters.video & filters.audio & filters.document)
 async def shazam_(client, message):
     stime = time.time()
     hehe = await client.send_message(message.chat.id, text="`Processing...`", reply_to_message_id=message.message_id)
-    if not message.reply_to_message:
-        return await hehe.edit("**Reply Audio or Video.**")
-    if not (message.reply_to_message.audio or message.reply_to_message.voice or message.reply_to_message.video):
-        return await hehe.edit("**Reply Audio or Video.**")
-    if message.reply_to_message.video:
-        video_file = await message.reply_to_message.download()
+    if message.video:
+        video_file = await message.download()
         music_file = await convert_to_audio(video_file)
-        dur = message.reply_to_message.video.duration
+        dur = message.video.duration
         if not music_file:
             return await hehe.edit("**Unable to convert to song file. Is this a valid file?**")
-    elif (message.reply_to_message.voice or message.reply_to_message.audio):
-        dur = message.reply_to_message.voice.duration if message.reply_to_message.voice else message.reply_to_message.audio.duration
-        music_file = await message.reply_to_message.download()
+    elif (message.voice or message.audio):
+        dur = message.voice.duration if message.voice else message.audio.duration
+        music_file = await message.download()
     size_ = humanbytes(os.stat(music_file).st_size)
     dur = datetime.timedelta(seconds=dur)
     thumb, by, title = await shazam(music_file)
