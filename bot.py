@@ -101,7 +101,7 @@ async def shazam(file):
     image = nt.get("coverarthq")
     by = track.get("subtitle")
     title = track.get("title")
-    return image, by, title
+    return image, by, title = None
 
 async def convert_to_audio(vid_path):
     stark_cmd = f"ffmpeg -i {vid_path} -map 0:a rsr.mp3"
@@ -127,7 +127,7 @@ async def shazam_(client, message):
         music_file = await message.download()
     size_ = humanbytes(os.stat(music_file).st_size)
     dur = datetime.timedelta(seconds=dur)
-    thumb, by, title = await shazam(music_file)
+    image, by, title = await shazam(music_file)
     if not title and thumb:
         return await hehe.edit("**Not found :(**")
     etime = time.time()
@@ -138,7 +138,7 @@ async def shazam_(client, message):
 
 <b>By :</b> <code>{by}</code>
     """
-    if thumb:
+    if image:
         await hehe.delete()
         await client.send_photo(message.chat.id, photo=thumb, caption=caption, reply_to_message_id=message.message_id)
     else:
