@@ -18,9 +18,7 @@ RSR = Client(
 )
 
 START = """ Hi {}, I'm Song recogniser Bot.\n
-**Tutorial** ⬇️\n
-**Step 1** : Send me Video or Audio\n
-**Step 2** : Reply your Video or Audio with this /audify command
+Send me Audio or Video, then I'll reconise.
 """
 
 ABOUT = """
@@ -31,7 +29,7 @@ ABOUT = """
 """
 
 HELP = """
-/audify : Reply Audio or Video\n
+Send me Audio or Video.\n
 **+** When you have Deploy/Fork problem ask @rsrmusic
 """
 
@@ -140,7 +138,7 @@ async def shazam_(client, message):
     """
     if thumb:
         await hehe.delete()
-        await message.reply_to_message.reply_photo(thumb, caption=caption, quote=True)
+        await client.send_photo(message.chat.id, photo=thumb, caption=caption, reply_to_message_id=message.message_id)
     else:
         await hehe.edit(caption)
 
