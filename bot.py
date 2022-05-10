@@ -127,7 +127,7 @@ async def shazam_(client, message):
     dur = datetime.timedelta(seconds=dur)
     shazam = Shazam()
     try:
-        r = await shazam.recognize_song(message)
+        r = await shazam.recognize_song(music_file)
     except:
         return None, None, None
     if not r:
@@ -141,9 +141,9 @@ async def shazam_(client, message):
     by = track.get("subtitle")
     title = track.get("title")
     return image, by, title
-    thumb, by, title = await shazam(music_file)
-    if not title and thumb:
-        return await hehe.edit("**Not found :(**")
+    #thumb, by, title = await shazam(music_file)
+    #if not title and thumb:
+        #return await hehe.edit("**Not found :(**")
     etime = time.time()
     t_k = round(etime - stime)
     caption = f"""<b><u>Finded Song ✅</b></u>
@@ -152,7 +152,7 @@ async def shazam_(client, message):
 
 <b>By :</b> <code>{by}</code>
     """
-    if thumb:
+    if nt:
         await hehe.delete()
         await client.send_photo(message.chat.id, photo=thumb, caption=caption, reply_to_message_id=message.message_id)
     else:
